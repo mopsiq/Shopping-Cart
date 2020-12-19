@@ -1,0 +1,92 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #1a3c55;
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  color: #000;
+
+  padding: 15px;
+  margin: 0 15px;
+}
+
+.header__cart {
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #e8534f;
+  color: #000;
+}
+
+
+.container {
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 15px;
+}
+
+.orders {
+  margin-top: 20%;
+  background-color: #ccc;
+  text-align: center;
+  height: auto;
+}
+
+.block {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20%;
+}
+
+.block__item {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+
+  width: 150px;
+  height: 150px;
+  margin: 5px 15px;
+  text-align: center;
+
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.block__item[order-state="1"] {
+  background-color: #5645a2;
+}
+
+.block__item[order-state="2"] {
+  background-color: #1e619e;
+}
+
+.block__item[order-state="3"] {
+  background-color: #428d29;
+}
+
+.block__item[order-state="4"] {
+  background-color: #992c63;
+}
+
+.block__item[order-state="5"] {
+  background-color: #1d5d70;
+}
+
+.block__item[order-state="6"] {
+  background-color: #99732c;
+}
