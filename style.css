@@ -9,6 +9,11 @@ body {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}
+
 .header {
   background-color: #1a3c55;
 }
@@ -34,7 +39,6 @@ body {
 
 
 .container {
-  max-width: 1200px;
   padding: 0 15px;
   margin: 0 15px;
 }
@@ -47,24 +51,43 @@ body {
 }
 
 .block {
-  display: flex;
-  flex-wrap: wrap;
   margin-top: 20%;
 }
 
-.block__item {
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-
-  width: 150px;
-  height: 150px;
-  margin: 5px 15px;
-  text-align: center;
-
+.hidden {
   background-color: #ccc;
-  border-radius: 10px;
+  opacity: 0.4;
+}
+.hidden button {
+  cursor: default;
+}
+
+.block__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.block__item {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex: 1 0 auto;
+    width: 370px;
+    height: 170px;
+
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.block__btn {
+  outline: none;
+  border: 0;
+  background-color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
 }
 
 .block__item[order-state="1"] {
