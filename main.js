@@ -6,57 +6,51 @@ const orderList = document.querySelector('.orders');
 const btn = document.querySelectorAll('.block__btn');
 const btnTwo = document.querySelector('.order__btn');
 
+function creatingObject(value) {
+    let obj = new Object();
 
-function getStyle(className) {
-    let variable = '';
-    let classes = document.styleSheets[0].rules || document.styleSheets[0].cssRules;
-      for (let i = 0; i < classes.length; i++) {
+    obj.a = value.className;
+    obj.b = value.getAttribute('order-state');
 
-          if (classes[i].selectorText == className) {
-              (classes[i].cssText) ? variable += classes[i].cssText : variable += classes[i].style.cssText;
-          }
-          
-      }
-
-    return variable
+    return obj;
 }
 
-function getDataInStorage(item) {
-    let obj = getStyle('.' + item.className);
-    console.log(item.attributes)
-    window.localStorage.setItem('user', JSON.stringify(obj))
-    console.log(obj)
+function createProductInCart(object) {
+    
 }
-
 
 document.addEventListener('DOMContentLoaded', (e) => {
 
-// let getStorage = window.localStorage.setItem('user', JSON.stringify(obj));
-// let storage = window.localStorage.getItem('user')
-// let newObj = JSON.parse(storage)
-// let newObj;
-
     if(btn) {
-        
+        let arrayItems = [];
+
         btn.forEach((item) => {
           let currentBlock = item.parentElement.parentElement;
             item.addEventListener('click', () =>  {
-                if(!currentBlock.classList.contains('hidden')) {
-                  getDataInStorage(currentBlock)
-                  currentBlock.classList.add('hidden')
-                  currentBlock.setAttribute('disabled', 'disabled')
-                } 
 
-            })
-        })
+                arrayItems.push(creatingObject(currentBlock))
+                    if(!currentBlock.classList.contains('hidden')) {
+                        currentBlock.classList.add('hidden')
+                        currentBlock.setAttribute('disabled', 'disabled')
+                    } 
+                console.log(arrayItems)
+                window.localStorage.setItem('product', JSON.stringify(arrayItems))
 
-    } 
+            });
+        });
+
+    };
     
     if(btnTwo) {
 
         btnTwo.addEventListener('click', () => {
-          let storage = window.localStorage.getItem('user');
-          console.log(JSON.parse(storage))
+          let storage = window.localStorage.getItem('product');
+          let storageJSON = JSON.parse(storage)
+          console.log(storageJSON)
+          for(let i in storageJSON) {
+              console.log(storageJSON[i].a)
+              console.log(storageJSON[i].b)
+          }
         })
 
     }
