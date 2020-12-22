@@ -2,57 +2,83 @@
 
 const block = document.querySelectorAll('.block__inner');
 const blockList = document.querySelectorAll('.block__item');
-const orderList = document.querySelector('.orders');
+const orderList = document.querySelector('.orders__inner');
 const btn = document.querySelectorAll('.block__btn');
 const btnTwo = document.querySelector('.order__btn');
 
+let arrayItems = [];
+
 function creatingObject(value) {
     let obj = new Object();
-
     obj.a = value.className;
     obj.b = value.getAttribute('order-state');
-
+    obj.c = value.getAttributeNames();
+    obj.d = value.textContent;
     return obj;
 }
 
-function createProductInCart(object) {
-    
+function createProductInCart(object, block) {
+    let result = [];
+    for(let i = 0; i < object.length; i++) {
+        let div = document.createElement('div');
+        div.className = object[i].a;
+        div.textContent = object[i].d;
+        div.setAttribute(object[i].c[1], object[i].b)
+        result.push(div)
+    }
+    block.append(...result);
+}
+
+function testBlock(domen, block) {
+    let storageFunction = JSON.parse(domen);
+    let testArray = [];
+    if(Object.keys(storageFunction) !== 0) {
+        for(let i of Object.values(storageFunction)) {
+            testArray.push(i.b)
+        }
+    }
+
+    block.forEach((item) => {
+        for(let i = 0; i < block.length; i++) {
+            if(item.getAttribute('order-state') == testArray[i]) {
+                item.className += ' hidden'
+            }
+        }
+    })
+    console.log(testArray)
+   
 }
 
 document.addEventListener('DOMContentLoaded', (e) => {
-
-    if(btn) {
-        let arrayItems = [];
-
+    
+    if(document.location.href.slice(22) === 'index.html') {
+        testBlock(window.localStorage.getItem('product'), blockList) 
         btn.forEach((item) => {
-          let currentBlock = item.parentElement.parentElement;
+        
+        let currentBlock = item.parentElement.parentElement;
             item.addEventListener('click', () =>  {
-
                 arrayItems.push(creatingObject(currentBlock))
                     if(!currentBlock.classList.contains('hidden')) {
                         currentBlock.classList.add('hidden')
                         currentBlock.setAttribute('disabled', 'disabled')
-                    } 
-                console.log(arrayItems)
+                        // window.localStorage.setItem('blocks', JSON.stringify(arrayItems))
+                    }
+                    console.log(arrayItems)
                 window.localStorage.setItem('product', JSON.stringify(arrayItems))
-
+                
             });
+
         });
-
+        // console.log(checkingBlocks(window.localStorage.setItem('product', JSON.stringify(arrayItems))))
     };
+
     
-    if(btnTwo) {
-
-        btnTwo.addEventListener('click', () => {
-          let storage = window.localStorage.getItem('product');
-          let storageJSON = JSON.parse(storage)
-          console.log(storageJSON)
-          for(let i in storageJSON) {
-              console.log(storageJSON[i].a)
-              console.log(storageJSON[i].b)
-          }
-        })
-
+    
+    if(document.location.href.slice(22) === 'cart.html') {
+        let storage = window.localStorage.getItem('product');
+        let storageJSON = JSON.parse(storage)
+        console.log(storageJSON)
+        createProductInCart(storageJSON, orderList)
     }
 
 })
