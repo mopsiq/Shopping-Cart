@@ -117,3 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 .block__item[order-state="6"] {
   background-color: #99732c;
 }
+
+.block__item[order-state="7"] {
+  background-color: #821f41;
+}

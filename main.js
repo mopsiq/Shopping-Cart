@@ -5,7 +5,6 @@ const blockList = document.querySelectorAll('.block__item');
 const orderList = document.querySelector('.orders__inner');
 const btn = document.querySelectorAll('.block__btn');
 const btnTwo = document.querySelector('.order__btn');
-
 let arrayItems = [];
 
 function creatingObject(value) {
@@ -21,10 +20,11 @@ function createProductInCart(object, block) {
     let result = [];
     for(let i = 0; i < object.length; i++) {
         let div = document.createElement('div');
-        div.className = object[i].a;
+        div.className = object[i].a.slice(0, 11);
         div.textContent = object[i].d;
         div.setAttribute(object[i].c[1], object[i].b)
         result.push(div)
+        console.log(object[i].a)
     }
     block.append(...result);
 }
@@ -32,7 +32,7 @@ function createProductInCart(object, block) {
 function testBlock(domen, block) {
     let storageFunction = JSON.parse(domen);
     let testArray = [];
-    if(Object.keys(storageFunction) !== 0) {
+    if(Object.keys(storageFunction) !== null) {
         for(let i of Object.values(storageFunction)) {
             testArray.push(i.b)
         }
@@ -50,13 +50,19 @@ function testBlock(domen, block) {
 }
 
 document.addEventListener('DOMContentLoaded', (e) => {
-    
+    console.log(arrayItems)
     if(document.location.href.slice(22) === 'index.html') {
-        testBlock(window.localStorage.getItem('product'), blockList) 
-        btn.forEach((item) => {
         
-        let currentBlock = item.parentElement.parentElement;
+        btn.forEach((item) => {
+            let currentBlock = item.parentElement.parentElement;
+            if(currentBlock.hasAttribute('disabled')) {
+                arrayItems.push(creatingObject(currentBlock))
+            }
+            console.log(arrayItems)
+            testBlock(window.localStorage.getItem('product'), blockList) 
+
             item.addEventListener('click', () =>  {
+                
                 arrayItems.push(creatingObject(currentBlock))
                     if(!currentBlock.classList.contains('hidden')) {
                         currentBlock.classList.add('hidden')
