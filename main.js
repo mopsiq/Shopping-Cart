@@ -5,6 +5,7 @@ const blockList = document.querySelectorAll('.block__item');
 const orderList = document.querySelector('.orders__inner');
 const btn = document.querySelectorAll('.block__btn');
 const btnTwo = document.querySelector('.order__btn');
+
 let arrayItems = [];
 
 function creatingObject(value) {
@@ -20,7 +21,9 @@ function createProductInCart(object, block) {
     let result = [];
     for(let i = 0; i < object.length; i++) {
         let div = document.createElement('div');
-        div.className = object[i].a.slice(0, 11);
+        let from = object[i].a.search()
+        object[i].a = object[i].a.slice(0, 11)
+        div.className = object[i].a;
         div.textContent = object[i].d;
         div.setAttribute(object[i].c[1], object[i].b)
         result.push(div)
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         
         btn.forEach((item) => {
             let currentBlock = item.parentElement.parentElement;
-            if(currentBlock.hasAttribute('disabled')) {
+            if(currentBlock.classList.contains('hidden')) {
                 arrayItems.push(creatingObject(currentBlock))
             }
             console.log(arrayItems)
