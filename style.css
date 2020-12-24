@@ -77,12 +77,31 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     align-content: center;
     align-items: center;
-    flex: 1 0 auto;
     min-width: 370px;
     height: 170px;
 
     border-radius: 10px;
     margin: 10px;
+
+    position: relative;
+}
+
+.button__close {
+   position: absolute;
+   top: 0;
+   right: 0;
+   z-index: 1;
+   width: 30px;
+   height: 15px;
+   outline: none;
+   border: 0;
+   background-color: #000;
+
+   visibility: hidden;
+}
+
+.button__close:hover {
+   cursor: pointer;
 }
 
 .block__btn {
@@ -120,4 +139,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .block__item[order-state="7"] {
   background-color: #821f41;
+}
+
+.block__item[order-state="7"] {
+  background-color: #821f41;
+}
+
+.block__item[order-state="8"] {
+  background-color: #647cce;
+}
+
+.block__item[order-state="9"] {
+  background-color: #91d622;
+}
+
+.block__item[order-state="10"] {
+  background-color: #ff0000;
 }

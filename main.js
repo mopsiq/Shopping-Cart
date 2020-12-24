@@ -4,7 +4,8 @@ const block = document.querySelectorAll('.block__inner');
 const blockList = document.querySelectorAll('.block__item');
 const orderList = document.querySelector('.orders__inner');
 const btn = document.querySelectorAll('.block__btn');
-const btnTwo = document.querySelector('.order__btn');
+const btnClose = document.querySelectorAll('.button__close');
+const btnCartClear = document.querySelector('.order__btn');
 
 let arrayItems = [];
 
@@ -21,64 +22,56 @@ function createProductInCart(object, block) {
     let result = [];
     for(let i = 0; i < object.length; i++) {
         let div = document.createElement('div');
-        let from = object[i].a.search()
-        object[i].a = object[i].a.slice(0, 11)
-        div.className = object[i].a;
+        div.append(btnClose)
+        div.className = object[i].a.split(' ')[0];
         div.textContent = object[i].d;
         div.setAttribute(object[i].c[1], object[i].b)
         result.push(div)
-        console.log(object[i].a)
     }
     block.append(...result);
 }
 
-function testBlock(domen, block) {
-    let storageFunction = JSON.parse(domen);
-    let testArray = [];
-    if(Object.keys(storageFunction) !== null) {
-        for(let i of Object.values(storageFunction)) {
-            testArray.push(i.b)
+function checkingBlock(data, blockParent) {
+    let storageData = JSON.parse(data);
+    let array = [];
+    if(Object.keys(storageData) !== null) {
+        for(let i of Object.values(storageData)) {
+            array.push(i.b)
         }
     }
 
-    block.forEach((item) => {
-        for(let i = 0; i < block.length; i++) {
-            if(item.getAttribute('order-state') == testArray[i]) {
+    blockParent.forEach((item) => {
+         array.forEach((elem) => {
+             if(item.getAttribute('order-state') == elem) {
                 item.className += ' hidden'
-            }
-        }
+             }
+         })
     })
-    console.log(testArray)
+    console.log(array)
    
 }
 
 document.addEventListener('DOMContentLoaded', (e) => {
-    console.log(arrayItems)
+    checkingBlock(window.localStorage.getItem('product'), blockList) 
     if(document.location.href.slice(22) === 'index.html') {
-        
         btn.forEach((item) => {
             let currentBlock = item.parentElement.parentElement;
+            
             if(currentBlock.classList.contains('hidden')) {
                 arrayItems.push(creatingObject(currentBlock))
             }
-            console.log(arrayItems)
-            testBlock(window.localStorage.getItem('product'), blockList) 
 
             item.addEventListener('click', () =>  {
-                
                 arrayItems.push(creatingObject(currentBlock))
                     if(!currentBlock.classList.contains('hidden')) {
                         currentBlock.classList.add('hidden')
                         currentBlock.setAttribute('disabled', 'disabled')
-                        // window.localStorage.setItem('blocks', JSON.stringify(arrayItems))
-                    }
-                    console.log(arrayItems)
+                    } 
+                console.log(arrayItems)
                 window.localStorage.setItem('product', JSON.stringify(arrayItems))
-                
             });
 
         });
-        // console.log(checkingBlocks(window.localStorage.setItem('product', JSON.stringify(arrayItems))))
     };
 
     
@@ -88,8 +81,16 @@ document.addEventListener('DOMContentLoaded', (e) => {
         let storageJSON = JSON.parse(storage)
         console.log(storageJSON)
         createProductInCart(storageJSON, orderList)
-    }
 
+        btnCartClear.addEventListener('click', () => {
+            while(orderList.children.length !== 0) {
+                let i = 0;
+                orderList.children[i].remove()
+                i++;
+            }
+        })
+    }
+    
 })
 
 
