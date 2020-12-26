@@ -7,7 +7,7 @@ const btn = document.querySelectorAll('.block__btn');
 const btnClose = document.querySelectorAll('.button__close');
 const btnCartClear = document.querySelector('.order__btn');
 
-let arrayItems = [];
+let localStorageInArray = [];
 
 function creatingObject(itemsList) {
     let objectInList = new Object();
@@ -81,28 +81,28 @@ document.addEventListener('DOMContentLoaded', (e) => {
             btn.forEach((item) => {
                 let currentBlock = item.closest('.block__item');
 
-                btnClose.forEach((item) => {
-                    item.addEventListener('click', () => {
-                        singleRemoveItem(item.closest('.block__item'), arrayItems)
+                btnClose.forEach((currentBtnClose) => {
+                    currentBtnClose.addEventListener('click', () => {
+                        singleRemoveItem(currentBtnClose.closest('.block__item'), localStorageInArray)
+                        currentBtnClose.closest('.block__item').classList.remove('hidden')
+                        currentBtnClose.style.visibility = 'hidden'
                     });
                 });
     
 
                 if(currentBlock.classList.contains('hidden')) {
-                    arrayItems.push(creatingObject(currentBlock))
+                    localStorageInArray.push(creatingObject(currentBlock))
                     item.setAttribute("disabled", "disabled");
                 };
 
                 item.addEventListener('click', () =>  {
-                    arrayItems.push(creatingObject(currentBlock))
+                    localStorageInArray.push(creatingObject(currentBlock))
                         if(!currentBlock.classList.contains('hidden')) {
                             currentBlock.classList.add('hidden')
                             item.setAttribute("disabled", "disabled");
                             item.nextElementSibling.style.visibility = 'visible';
                         } 
-                    
-                    console.log(arrayItems);
-                    window.localStorage.setItem('product', JSON.stringify(arrayItems));
+                    window.localStorage.setItem('product', JSON.stringify(localStorageInArray));
                 });
 
             });
@@ -113,13 +113,12 @@ document.addEventListener('DOMContentLoaded', (e) => {
     
         if(document.location.href.slice(22) === 'cart.html') {
             
-            let storage = window.localStorage.getItem('product');
-            let storageJSON = JSON.parse(storage);
-            console.log(storageJSON);
-            createProductInCart(storageJSON, orderList);
+            let getDataInLocalStorage = window.localStorage.getItem('product');
+            let localStorageInJSON = JSON.parse(getDataInLocalStorage);
+            createProductInCart(localStorageInJSON, orderList);
 
             btnCartClear.addEventListener('click', () => {
-                while(orderList.children.length !== 0) {
+                while(orderList.children.length) {
                     let i = 0;
                     orderList.children[i].remove()
                     i++;

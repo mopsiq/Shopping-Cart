@@ -91,12 +91,12 @@ h1, h2, h3, h4, h5, h6 {
    top: 0;
    right: 0;
    z-index: 1;
-   width: 30px;
+   width: 15px;
    height: 15px;
    outline: none;
    border: 0;
-   background-color: #000;
-
+   background-image: url(/cancel.svg);
+  
    visibility: hidden;
 }
 
@@ -155,4 +155,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .block__item[order-state="10"] {
   background-color: #ff0000;
+}
+
+.block__item[order-state="11"] {
+  background-color: #a1aab6;
+}
+
+.block__item[order-state="12"] {
+  background-color: #37570a;
 }
